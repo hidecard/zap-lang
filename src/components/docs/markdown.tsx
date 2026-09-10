@@ -83,22 +83,17 @@ export const Markdown = memo(function Markdown({ content }: MarkdownProps) {
       code(props: any) {
         const { className, children, node, ...rest } = props;
         const fence = /language-(\w+)/.exec(className || "")?.[1];
-        const isBlock = (node as any)?.position?.start.line !== (node as any)?.position?.end.line || String(children).includes("\n");
-        if (isBlock && fence) {
+        // A code element is a *block* when it has a language fence OR spans
+        // multiple lines. Inline code is single-line without a language class.
+        const text = String(children);
+        const isBlock = !!fence || text.includes("\n") || (node as any)?.position?.start.line !== (node as any)?.position?.end.line;
+        if (isBlock) {
           return (
             <CodeBlock
-              fence={fence}
+              fence={fence || "text"}
               isDark={isDark}
             >
-              {String(children).replace(/\n$/, "")}
-            </CodeBlock>
-          );
-        }
-        if (isBlock && !fence) {
-          // Block without language hint: render as plain pre.
-          return (
-            <CodeBlock fence="text" isDark={isDark}>
-              {String(children).replace(/\n$/, "")}
+              {text.replace(/\n$/, "")}
             </CodeBlock>
           );
         }

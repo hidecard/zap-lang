@@ -170,3 +170,62 @@ Stage Summary:
   across 14 sections.
 - All new pages verified rendering, navigating, and searchable.
 - Lint clean; no current runtime errors.
+
+---
+Task ID: 10
+Agent: orchestrator (main)
+Task: Add the remaining/deferred topics ("နောက်ကျန်တာတွေ") — advanced
+language, web, testing, deployment, runtime, project, and packages pages.
+
+Work Log:
+- Re-cloned hidecard/zap (sparse) and read the authoritative upstream docs:
+  DEFAULT_PARAMETERS_EN, TYPE_NARROWING_EN, DIAGNOSTIC_MODEL_EN,
+  AUTH_OAUTH2_JWT_EN, ZAP_HOST_EN, ZAP_HOST_QUICKSTART_EN,
+  PRODUCTION_OPERATIONS_EN, RELEASE_VERSION_POLICY_EN, RELEASE_SIGNING_EN,
+  RELEASE_ROLLBACK_RUNBOOK_EN, BENCHMARK_HARNESS_EN, BOOTSTRAP_CONTRACT_EN,
+  RUST_INDEPENDENCE_ROADMAP_EN, TRAITS_RFC_EN, COMPATIBILITY_MATRIX,
+  BRANCH_HYGIENE_EN, REGISTRY_AUTH_EN, STDLIB_POLICY_EN, LOAD_CHAOS_TESTING_EN,
+  DATABASE_PRODUCTION_EN, ECOSYSTEM.
+- Wrote a Python generator (/tmp/gen_remaining.py) that builds 7 new content
+  files with 21 new pages, escaping backticks and ${ properly for TS template
+  literals (learned from the previous escaping bug: the heredoc had escaped
+  backticks \`, so esc() now un-escapes them first, then re-escapes for TS).
+- New files:
+  - language-additions.ts: Modules & Workspaces, Default Parameters,
+    Type Narrowing, Diagnostics Model (Language Advanced section)
+  - web-additions.ts: Authentication (OAuth2/JWT), Host Adapter,
+    Database Production (Web Advanced section)
+  - testing-additions.ts: Load & Chaos Testing (Testing Advanced section)
+  - packages-additions.ts: Registry Authentication, Standard Library Policy
+    (Packages Advanced section)
+  - runtime-additions.ts: Benchmark Harness (Runtime Advanced section)
+  - deployment-additions.ts: Production Operations, Release Version Policy,
+    Release Signing & Rollback (Deployment Advanced section)
+  - project-additions.ts: Bootstrap & Self-Hosting, Rust Independence
+    Roadmap, Traits RFC, Compatibility Matrix, Branch Hygiene, Ecosystem
+    (Project Advanced section)
+- Wired all 7 new sections into docs-data.ts; ordering now has an
+  "(Advanced)" subsection after each main section.
+- Also fixed the markdown renderer's isBlock detection to treat any code
+  element with a language fence OR multi-line content as a block (the
+  previous node.position-based check was unreliable for some content).
+- `bun run lint` clean (0 errors).
+- Agent Browser verification:
+  - All 7 new "(Advanced)" sections appear in the sidebar (LANGUAGE, WEB,
+    TESTING, PACKAGES, RUNTIME, DEPLOYMENT, PROJECT), all 21 new pages
+    reachable.
+  - Navigated #traits-rfc (2 pre + 12 code), #web-auth (2 code blocks),
+    #production-operations (2), #ecosystem (2): all render with correct H1
+    and code, no console/runtime errors.
+  - Cmd+K search for "bootstrap" returns "Bootstrap & Self-Hosting" under
+    PROJECT (ADVANCED) — new pages are indexed.
+- VLM verification of the bootstrap page: "H1 and section headings render
+  clearly … stage policy table and code blocks render with syntax
+  highlighting … sidebar shows PROJECT (ADVANCED) with the active page
+  highlighted … no visual defects."
+
+Stage Summary:
+- Added 21 new doc pages across 7 new "(Advanced)" subsections, bringing
+  the site from 49 to 69 unique pages across 21 sections.
+- All new pages verified rendering, navigating, and searchable.
+- Lint clean; no runtime errors.
