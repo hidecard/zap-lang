@@ -267,24 +267,9 @@ for score in scores:
                   <span className="font-mono text-xs text-muted-foreground">hello.zp</span>
                   <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">zap</span>
                 </div>
-                <SyntaxHighlighter
-                  language="python"
-                  style={isDark ? oneDark : oneLight}
-                  customStyle={{
-                    margin: 0,
-                    background: "transparent",
-                    fontSize: "0.85rem",
-                    padding: "1.1rem 1.25rem",
-                  }}
-                  codeTagProps={{
-                    style: {
-                      fontFamily:
-                        "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
-                    },
-                  }}
-                >
+                <ClientSyntaxHighlighter language="python">
                   {heroCode}
-                </SyntaxHighlighter>
+                </ClientSyntaxHighlighter>
               </div>
             </div>
           </div>
@@ -403,24 +388,9 @@ for score in scores:
                 <span className="font-mono text-xs text-muted-foreground">glance.zp</span>
                 <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">zap</span>
               </div>
-              <SyntaxHighlighter
-                language="python"
-                style={isDark ? oneDark : oneLight}
-                customStyle={{
-                  margin: 0,
-                  background: "transparent",
-                  fontSize: "0.85rem",
-                  padding: "1.1rem 1.25rem",
-                }}
-                codeTagProps={{
-                  style: {
-                    fontFamily:
-                      "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
-                  },
-                }}
-              >
+              <ClientSyntaxHighlighter language="python">
                 {languageAtAGlance}
-              </SyntaxHighlighter>
+              </ClientSyntaxHighlighter>
             </div>
           </div>
         </div>
@@ -446,29 +416,14 @@ for score in scores:
               <span className="font-mono text-xs text-muted-foreground">terminal</span>
               <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">bash</span>
             </div>
-            <SyntaxHighlighter
-              language="bash"
-              style={isDark ? oneDark : oneLight}
-              customStyle={{
-                margin: 0,
-                background: "transparent",
-                fontSize: "0.85rem",
-                padding: "1.1rem 1.25rem",
-              }}
-              codeTagProps={{
-                style: {
-                  fontFamily:
-                    "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
-                },
-              }}
-            >
+            <ClientSyntaxHighlighter language="bash">
 {`zap new my_app          # create a complete user-managed Web project
 cd my_app
 zap check              # validate the manifest, modules, and known types
 zap build --locked     # validate reproducible build inputs
 zap test tests         # run *_test.zp files
 zap dev                # start the bounded native development server`}
-            </SyntaxHighlighter>
+            </ClientSyntaxHighlighter>
           </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
