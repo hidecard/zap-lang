@@ -673,6 +673,66 @@ zap dev                # start the bounded native development server`}
   );
 }
 
+function ClientSyntaxHighlighter({
+  children,
+  language,
+  ...rest
+}: {
+  children: string;
+  language: string;
+  [key: string]: any;
+}) {
+  const { resolvedTheme } = useTheme();
+  const isDark = (resolvedTheme ?? "dark") === "dark";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) {
+    return (
+      <pre
+        style={{
+          margin: 0,
+          background: "transparent",
+          fontSize: "0.85rem",
+          padding: "1.1rem 1.25rem",
+        }}
+      >
+        <code
+          style={{
+            fontFamily:
+              "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
+          }}
+        >
+          {children}
+        </code>
+      </pre>
+    );
+  }
+
+  return (
+    <SyntaxHighlighter
+      language={language}
+      style={isDark ? oneDark : oneLight}
+      customStyle={{
+        margin: 0,
+        background: "transparent",
+        fontSize: "0.85rem",
+        padding: "1.1rem 1.25rem",
+      }}
+      codeTagProps={{
+        style: {
+          fontFamily:
+            "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
+        },
+      }}
+      {...rest}
+    >
+      {children}
+    </SyntaxHighlighter>
+  );
+}
+
 function Stat({
   label,
   value,
