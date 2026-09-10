@@ -1,6 +1,7 @@
 // Aggregates all documentation sections and pages into a single lookup.
 import type { DocSection, DocPage } from "./types";
 import { gettingStarted } from "./content/getting-started";
+import { basics } from "./content/basics";
 import { language } from "./content/language";
 import { reference } from "./content/reference";
 import { web } from "./content/web";
@@ -12,6 +13,7 @@ import { projectSection } from "./content/project";
 
 const groups: { section: DocSection; pages: DocPage[] }[] = [
   gettingStarted,
+  basics,
   language,
   reference,
   web,

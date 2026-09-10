@@ -69,3 +69,42 @@ Stage Summary:
   sticky footer, syntax highlighting, TOC scroll-spy, prev/next navigation,
   source links to GitHub, and copy-to-clipboard install hint.
 - Lint clean; no runtime/hydration errors in dev.log.
+
+---
+Task ID: 8
+Agent: orchestrator (main)
+Task: Add a detailed "Basics" section with beginner lessons covering values,
+variables, comments, operators, statements, if/if-else, loops, functions,
+classes, and collections.
+
+Work Log:
+- Re-cloned hidecard/zap (sparse, docs/examples only) to read authoritative
+  content from LEARN_ZAP_EN.md and SYNTAX_GUIDE_EN.md.
+- Created src/lib/docs/content/basics.ts with 10 new DocPage entries:
+  basics-values, basics-variables, basics-comments, basics-operators,
+  basics-statements, basics-conditionals, basics-loops, basics-functions,
+  basics-classes, basics-collections.
+- Inserted the new `basics` group into docs-data.ts right after
+  getting-started so the sidebar order is Getting Started > Basics > Language.
+- Each page uses the GraduationCap lucide icon for the section, ships real
+  runnable `.zp` snippets (range(), for/while/break/continue, defaults,
+  named args, closures, extends, json/from_json), and cross-links to the
+  next lesson and to the deeper reference pages.
+- `bun run lint` clean (0 errors).
+- Agent Browser verification:
+  - BASICS section appears in the sidebar with all 10 pages; active page
+    highlighted; auto-expands when navigating.
+  - Navigated #basics-conditionals and #basics-operators: H1 + headings + 14
+    code blocks (labeled "zap") render correctly.
+  - Cmd+K search for "loop" returns "Loops: for & while (BASICS)" as the top
+    hit — new pages are indexed.
+  - No page/console errors.
+- VLM verification of the conditionals page: "H1 and section headings render
+  clearly … code blocks labeled ZAP with syntax highlighting … three-column
+  layout intact with BASICS section highlighted … no visual defects."
+
+Stage Summary:
+- Added 10 detailed beginner lessons under a new "Basics" section, bringing
+  the site from 28 to 38 doc pages across 10 sections.
+- All lessons verified rendering, navigating, and searchable.
+- Lint clean; no runtime errors.
