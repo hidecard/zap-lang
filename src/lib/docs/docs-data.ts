@@ -4,11 +4,15 @@ import { gettingStarted } from "./content/getting-started";
 import { basics } from "./content/basics";
 import { language } from "./content/language";
 import { reference } from "./content/reference";
+import { stdlibDomains } from "./content/stdlib-domains";
+import { webWalkthroughSection } from "./content/web-walkthrough";
 import { web } from "./content/web";
+import { testingToolingSection } from "./content/testing-tooling";
 import { packagesSection } from "./content/packages";
 import { runtimeSection } from "./content/runtime";
 import { deploymentSection } from "./content/deployment";
 import { examplesSection } from "./content/examples";
+import { moreExamplesSection } from "./content/examples-more";
 import { projectSection } from "./content/project";
 
 const groups: { section: DocSection; pages: DocPage[] }[] = [
@@ -16,11 +20,15 @@ const groups: { section: DocSection; pages: DocPage[] }[] = [
   basics,
   language,
   reference,
+  stdlibDomains,
+  webWalkthroughSection,
   web,
+  testingToolingSection,
   packagesSection,
   runtimeSection,
   deploymentSection,
   examplesSection,
+  moreExamplesSection,
   projectSection,
 ];
 

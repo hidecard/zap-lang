@@ -326,10 +326,11 @@ export const reference: { section: DocSection; pages: DocPage[] } = {
     id: "reference",
     title: "Reference",
     icon: "BookText",
-    pages: [
-      { slug: "syntax-reference", title: "Syntax Reference" },
-      { slug: "stdlib", title: "Standard Library" },
-    ],
+    pages: [{ slug: "syntax-reference", title: "Syntax Reference" }],
   },
-  pages: [syntaxReference, stdlib],
+  pages: [syntaxReference],
 };
+
+// The Standard Library Overview page now lives in `stdlib-domains.ts` and is
+// re-exported there as the first page of the dedicated Standard Library section.
+export { stdlib };

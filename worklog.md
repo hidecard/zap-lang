@@ -108,3 +108,65 @@ Stage Summary:
   the site from 28 to 38 doc pages across 10 sections.
 - All lessons verified rendering, navigating, and searchable.
 - Lint clean; no runtime errors.
+
+---
+Task ID: 9
+Agent: orchestrator (main)
+Task: Add more detail and more usage — expand the Standard Library into a
+per-domain reference, add a hands-on Web App walkthrough, a Testing & Tooling
+page, and a More Examples page.
+
+Work Log:
+- Re-cloned hidecard/zap (sparse) to read authoritative detail from
+  STDLIB_TEXT_MATH_COLLECTION_EN.md, STDLIB_FILESYSTEM_JSON_EN.md,
+  STDLIB_TIME_EN.md, STDLIB_LOGGING_EN.md, USAGE_EN.md, and the tail of
+  LEARN_ZAP_EN.md (Web handlers, migrations, async, LSP, full small example).
+- Created src/lib/docs/content/stdlib-domains.ts with 10 per-domain pages:
+  text, math, collections, filesystem, json, system, time, logging, network,
+  process — each with a full API table, safety limits, runnable usage, common
+  patterns, and validation/errors.
+- Moved the existing Standard Library Overview page out of the Reference
+  section into the new dedicated Standard Library section (with Library icon).
+- Created src/lib/docs/content/web-walkthrough.ts: a 10-step end-to-end
+  "Build a Web App" hands-on guide (scaffold → routes → validation → JSON
+  response → static + SPA → model + migration → dev server → frontend → tests
+  → recap).
+- Created src/lib/docs/content/testing-tooling.ts: assert, _test.zp, zap test
+  flags, structured diagnostics, fmt/lint, the LSP, VS Code extension, test
+  layers, and a troubleshooting table.
+- Created src/lib/docs/content/examples-more.ts: 10 larger runnable programs
+  (report builder, CLI via env, JSON processing, HTTP echo, structured log,
+  recursion, closure factory, classes with inheritance, Result + ?, module +
+  import).
+- Restructured docs-data.ts ordering: Getting Started → Basics → Language →
+  Reference → Standard Library → Walkthrough → Web Framework → Testing &
+  Tooling → Packages → Runtime → Deployment → Examples → More Examples →
+  Project.
+- Hit a template-literal backtick-escaping bug: initial hand-written content
+  had malformed fence closers (`\`\`\``) that broke the TS template literal.
+  Resolved by regenerating all four new content files with a Python generator
+  that builds markdown as raw strings and escapes `\` → `\\` and `` ` `` → `` \` ``
+  before embedding — guaranteeing valid TS.
+- `bun run lint` clean (0 errors).
+- Agent Browser verification:
+  - All 4 new sections appear in the sidebar (STANDARD LIBRARY, WALKTHROUGH,
+    TESTING & TOOLING, MORE EXAMPLES).
+  - Navigated #stdlib-text, #web-walkthrough (32 code blocks), #testing-tooling
+    (18 code blocks), #examples-more (30 code blocks): all render with correct
+    H1 and content, no console/runtime errors.
+  - Cmd+K search for "filesystem" returns the new "filesystem — Files & Paths"
+    page under STANDARD LIBRARY — new pages are indexed.
+- VLM verification of the text page: "H1 and API reference table render
+  clearly … code blocks labeled and syntax-highlighted … sidebar shows the new
+  Standard Library section with the active page highlighted … no visual
+  defects."
+- Dev log clean: recent entries show successful compilation and HTTP 200
+  responses; the earlier "Parsing ecmascript" lines were transient during the
+  broken-file editing phase and are stale.
+
+Stage Summary:
+- Added 13 new doc pages (10 stdlib domains + walkthrough + testing/tooling +
+  more examples) across 4 new sections, bringing the site from 38 to 51 pages
+  across 14 sections.
+- All new pages verified rendering, navigating, and searchable.
+- Lint clean; no current runtime errors.
