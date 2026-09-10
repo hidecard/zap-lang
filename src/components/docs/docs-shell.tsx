@@ -34,7 +34,7 @@ function zapLogo() {
   );
 }
 
-export function DocsShell() {
+export function DocsShell({ onGoHome }: { onGoHome: () => void }) {
   const [slug, setSlug] = useState<string>("introduction");
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -143,14 +143,12 @@ export function DocsShell() {
             </SheetContent>
           </Sheet>
 
-          {/* Logo */}
-          <Link
-            href="#introduction"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("introduction");
-            }}
-            className="flex items-center gap-2.5"
+          {/* Logo — returns to the landing page */}
+          <button
+            type="button"
+            onClick={onGoHome}
+            className="flex items-center gap-2.5 cursor-pointer"
+            aria-label="Back to Zap home"
           >
             {zapLogo()}
             <div className="flex items-center gap-2">
@@ -163,7 +161,7 @@ export function DocsShell() {
             >
               {VERSION}
             </Badge>
-          </Link>
+          </button>
 
           {/* Search trigger */}
           <button
@@ -365,20 +363,18 @@ export function DocsShell() {
         <div className="mx-auto w-full max-w-[90rem] px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
             <div className="col-span-2">
-              <Link
-                href="#introduction"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("introduction");
-                }}
-                className="flex items-center gap-2"
+              <button
+                type="button"
+                onClick={onGoHome}
+                className="flex items-center gap-2 cursor-pointer"
+                aria-label="Back to Zap home"
               >
                 {zapLogo()}
                 <span className="font-semibold">Zap</span>
                 <Badge variant="secondary" className="font-mono text-[0.65rem]">
                   {VERSION}
                 </Badge>
-              </Link>
+              </button>
               <p className="mt-3 max-w-xs text-sm text-muted-foreground">
                 A readable, general-purpose programming language with{" "}
                 <code className="text-xs">.zp</code> source files, indentation-based

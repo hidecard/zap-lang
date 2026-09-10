@@ -229,3 +229,63 @@ Stage Summary:
   the site from 49 to 69 unique pages across 21 sections.
 - All new pages verified rendering, navigating, and searchable.
 - Lint clean; no runtime errors.
+
+---
+Task ID: 11
+Agent: orchestrator (main)
+Task: Add a landing/home page; clicking "docs" / "Read the Docs" enters the
+documentation.
+
+Work Log:
+- Created src/components/docs/landing-page.tsx: a polished single-page
+  landing with
+  - sticky header (logo, Documentation/Install/Standard Library/Web nav,
+    GitHub, theme toggle, "Read the Docs" CTA)
+  - hero with brand gradient headline "A readable language with a native
+    runtime", install-hint with copy-to-clipboard, and a code-editor
+    preview panel (hello.zp) with syntax highlighting and window chrome
+  - 4-stat strip (.zp, version, platforms, license)
+  - 6 feature cards (native runtime, .zp syntax, modules, structured
+    errors, Zap-native Web, bounded by design) — each clickable into docs
+  - "Language at a glance" section with checklist + a second code panel
+  - "One binary, the whole lifecycle" section with a bash terminal showing
+    zap new/check/build/test/dev + 4 lifecycle cards
+  - Standard Library domains grid (12 clickable domain chips with
+    determinism-class badges)
+  - CTA section "Start building with Zap today"
+  - full footer with link columns and back-to-docs
+- Modified DocsShell to accept an `onGoHome` prop; the header logo and the
+  footer logo now return to the landing page instead of navigating to
+  #introduction.
+- Rewrote src/app/page.tsx to manage a `view` state ("landing" | "docs")
+  with a stable URL-hash convention:
+    "" / "#home"        -> landing
+    "#docs"              -> docs at introduction
+    "#<page-slug>"       -> docs at that page (when the slug exists)
+  enterDocs(slug?) pushes the slug into the hash and switches to docs;
+  goHome() clears the hash and returns to landing. The DocsShell is keyed
+  by pageSlug so direct #<slug> links land on the right page on first
+  render. hashchange listener makes back/forward and shared links behave
+  predictably.
+- `bun run lint` clean (0 errors).
+- Agent Browser verification:
+  - GET / renders the landing hero (H1 "A readable language with a native
+    runtime"), no errors.
+  - Clicking "Read the Docs" navigates to #introduction and loads the docs
+    view (H1 "Introduction", sidebar visible).
+  - Clicking the docs header logo returns to the landing (URL cleared to /,
+    hero H1 restored).
+  - Direct link #installation goes straight into docs at the Installation
+    page (H1 "Installation").
+  - Mobile (390x844) landing renders correctly.
+- VLM verification of the landing: "hero section features a clear headline
+  and includes 'Read the Docs' and 'Try Zap' CTA buttons … code editor
+  preview with syntax highlighting for the Zap language … feature cards
+  are present below the hero … polished and professional with good
+  spacing, a brand violet color scheme, and no visual defects."
+
+Stage Summary:
+- Added a polished landing page; the app now opens on the landing and
+  enters docs via "Read the Docs" / nav links / direct #<slug> links. The
+  docs logo returns home. Both views render cleanly with no errors.
+- Lint clean; site still has 69 unique doc pages across 21 sections.
