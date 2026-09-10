@@ -125,7 +125,9 @@ function CodeBlock({
 }) {
   const [mounted, setMounted] = useState(false);
 
+  // This effect intentionally gates the client-only syntax highlighter after hydration.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

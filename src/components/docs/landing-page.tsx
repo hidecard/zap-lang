@@ -641,6 +641,8 @@ function ClientSyntaxHighlighter({
   const isDark = (resolvedTheme ?? "dark") === "dark";
   const [mounted, setMounted] = useState(false);
 
+  // This effect intentionally gates the client-only syntax highlighter after hydration.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
