@@ -7,7 +7,7 @@ import {
   oneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "next-themes";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useEffect, useState } from "react";
 import Link from "next/link";
 
 interface MarkdownProps {
@@ -123,6 +123,12 @@ function CodeBlock({
   isDark: boolean;
   children: string;
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="group relative my-5">
       <div className="flex items-center justify-between rounded-t-lg border border-b-0 border-border bg-muted/70 px-3 py-1.5">
@@ -130,29 +136,53 @@ function CodeBlock({
           {langLabel(fence)}
         </span>
       </div>
-      <SyntaxHighlighter
-        language={langFor(fence)}
-        style={isDark ? oneDark : oneLight}
-        customStyle={{
-          margin: 0,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          borderBottomLeftRadius: "0.5rem",
-          borderBottomRightRadius: "0.5rem",
-          fontSize: "0.86rem",
-          background: "transparent",
-          padding: "0.9rem 1rem",
-        }}
-        codeTagProps={{
-          style: {
-            fontFamily:
-              "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
-          },
-        }}
-        showLineNumbers={false}
-      >
-        {children}
-      </SyntaxHighlighter>
+      {mounted ? (
+        <SyntaxHighlighter
+          language={langFor(fence)}
+          style={isDark ? oneDark : oneLight}
+          customStyle={{
+            margin: 0,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            borderBottomLeftRadius: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+            fontSize: "0.86rem",
+            background: "transparent",
+            padding: "0.9rem 1rem",
+          }}
+          codeTagProps={{
+            style: {
+              fontFamily:
+                "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
+            },
+          }}
+          showLineNumbers={false}
+        >
+          {children}
+        </SyntaxHighlighter>
+      ) : (
+        <pre
+          style={{
+            margin: 0,
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
+            borderBottomLeftRadius: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+            fontSize: "0.86rem",
+            background: "transparent",
+            padding: "0.9rem 1rem",
+          }}
+        >
+          <code
+            style={{
+              fontFamily:
+                "var(--font-jetbrains-mono), var(--font-geist-mono), monospace",
+            }}
+          >
+            {children}
+          </code>
+        </pre>
+      )}
     </div>
   );
 }
